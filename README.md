@@ -39,6 +39,8 @@ python3 -m http.server 8743
 
 ## 致谢
 
+提示词出处:[@Aurelien_Gz 的这条 X](https://x.com/Aurelien_Gz/status/2064459148016619928),特此致谢。
+
 设计参考 2026 年 Web 设计趋势:kinetic typography、scrollytelling、
 neo-brutalism、dopamine palettes、CSS scroll-driven animations、retrofuturism。
 
