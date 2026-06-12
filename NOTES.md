@@ -22,4 +22,5 @@
 8. (之后再规划 Motion / WebGL 阶段)
 
 ## 其他
-- 教学工作区文件已加入 .gitignore(仓库是 public,学习状态默认不公开;用户想公开可随时移除)
+- 用户决定**公开学习进度**:教学工作区全部文件随仓库提交到 GitHub(2026-06-12 起)
+- 课程与速查表可经 GitHub Pages 在线访问:https://anata.me/fable5-landing-pages/lessons/
