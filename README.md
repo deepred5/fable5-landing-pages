@@ -4,6 +4,8 @@
 
 同一个模型,四种讲法。四个互不相同的 Claude Fable 5 落地页,外加一座「四扇门」入口,全部为零依赖的单文件 HTML(仅引用 Google Fonts)。
 
+**🌐 在线访问:https://anata.me/fable5-landing-pages/**
+
 ## 页面
 
 | 文件 | 版本 | 设计语言 |
@@ -39,7 +41,7 @@ python3 -m http.server 8743
 
 ## 致谢
 
-提示词出处:[@Aurelien_Gz 的这条 X](https://x.com/Aurelien_Gz/status/2064459148016619928),特此致谢。
+提示词出处:[@Aurelien_Gz](https://x.com/Aurelien_Gz/status/2064459148016619928),特此致谢。
 
 设计参考 2026 年 Web 设计趋势:kinetic typography、scrollytelling、
 neo-brutalism、dopamine palettes、CSS scroll-driven animations、retrofuturism。
