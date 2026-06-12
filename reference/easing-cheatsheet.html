@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>速查 · 缓动 Easing Cheatsheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#faf7f0;--ink:#26221c;--soft:#6b6457;--accent:#b3402a;--line:rgba(38,34,28,.18);--mono:"IBM Plex Mono",monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"Noto Serif SC",Georgia,serif;font-size:15px;line-height:1.8;padding:3rem 1.4rem}
+main{max-width:760px;margin:0 auto}
+h1{font-size:1.7rem;font-weight:600;margin-bottom:.3rem}
+.sub{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--soft);margin-bottom:2.2rem}
+h2{font-size:1.05rem;font-weight:600;margin:2.2rem 0 .8rem;color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th,td{border:1px solid var(--line);padding:.55rem .8rem;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;background:rgba(38,34,28,.05)}
+td code{font-family:var(--mono);font-size:.76rem;background:rgba(38,34,28,.06);padding:.05em .3em;border-radius:3px;white-space:nowrap}
+ul{padding-left:1.3em}
+li{margin-bottom:.4em}
+.foot{margin-top:2.5rem;font-size:.78rem;color:var(--soft);border-top:1px solid var(--line);padding-top:1rem}
+@media print{body{padding:0}.foot a{display:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>缓动速查表</h1>
+<div class="sub">EASING CHEATSHEET · 动效交互 · REF-001</div>
+
+<h2>三条铁律</h2>
+<ul>
+  <li><strong>入场 → ease-out 族</strong>(先快后慢):用户在等,起步要快,落点要稳。</li>
+  <li><strong>退场 → ease-in 族</strong>(先慢后快)或短到没人注意:离开的元素不值得戏份。</li>
+  <li><strong>linear 只用于机械运动</strong>:跑马灯、扫描线、loading 旋转、进度。</li>
+</ul>
+
+<h2>常用自定义曲线(按"性格"选)</h2>
+<table>
+  <tr><th>性格</th><th>曲线</th><th>用途</th></tr>
+  <tr><td>干脆利落(expo-out)</td><td><code>cubic-bezier(.16, 1, .3, 1)</code></td><td>大字入场、面板滑入、hero 排版——创意站点万金油</td></tr>
+  <tr><td>从容优雅(quart-out)</td><td><code>cubic-bezier(.22, 1, .36, 1)</code></td><td>比 expo 柔一点,适合正文区块的 reveal</td></tr>
+  <tr><td>俏皮回弹(back-out)</td><td><code>cubic-bezier(.2, 1.4, .3, 1)</code></td><td>贴纸、徽章、小图标弹出;第二值 &gt;1 即过冲,别用在大块面</td></tr>
+  <tr><td>更夸张回弹</td><td><code>cubic-bezier(.34, 1.56, .64, 1)</code></td><td>强调性的 pop(印章、点赞),一页最多一两处</td></tr>
+  <tr><td>机械匀速</td><td><code>linear</code></td><td>跑马灯、CRT 扫描带、雷达、无限循环位移</td></tr>
+  <tr><td>加速离场(ease-in)</td><td><code>cubic-bezier(.5, 0, .75, 0)</code></td><td>退场、抛出、收起</td></tr>
+</table>
+
+<h2>你四个落地页的签名曲线</h2>
+<table>
+  <tr><th>页面</th><th>曲线</th><th>用在哪</th></tr>
+  <tr><td>fable.html 神话之书</td><td><code>cubic-bezier(.16, 1, .3, 1)</code></td><td>字母逐个升起、滚动 reveal——全页统一 expo-out</td></tr>
+  <tr><td>fable-fieldnotes.html 田野笔记</td><td><code>cubic-bezier(.2, 1.4, .3, 1)</code></td><td>标题字母 pop、贴纸、徽章——全页统一 back-out</td></tr>
+  <tr><td>fable-bios.html CRT 终端</td><td><code>linear</code> + steps()</td><td>扫描带、光标闪烁(steps 模拟离散机械)</td></tr>
+  <tr><td>fable-zen.html 禅意水墨</td><td><code>cubic-bezier(.22, 1, .36, 1)</code>,时长 1.4s+</td><td>墨字浮现、圆相描画——同族曲线,靠超长时长制造"慢"</td></tr>
+</table>
+
+<h2>经验法则</h2>
+<ul>
+  <li>cubic-bezier(a, b, c, d):<strong>a/b 管起步,c/d 管刹车</strong>;b 或 d 超出 [0,1] = 回弹。</li>
+  <li>同一页面统一一族曲线 = 风格一致性的最大来源(对照上表)。</li>
+  <li>UI 微交互 150–300ms;区块入场 500–800ms;氛围/水墨 1s+。先定性格,再调时长。</li>
+  <li>调试工具:Chrome DevTools 的 Animations 面板可点击曲线图标实时拖控制点。</li>
+</ul>
+
+<div class="foot">
+  来源:<a href="https://animations.dev/">Animations on the Web (Emil Kowalski)</a> · <a href="https://gsap.com/resources/">GSAP Ease Visualizer</a> · 本仓库四个落地页源码<br>
+  配套课程:<a href="../lessons/0001-easing-the-grammar-of-motion.html">第 1 课 · 缓动:动效的语法</a>
+</div>
+</main>
+</body>
+</html>

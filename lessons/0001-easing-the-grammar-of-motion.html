@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 1 课 · 缓动:动效的语法</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#faf7f0;--ink:#26221c;--soft:#6b6457;--faint:#a59c8b;
+  --accent:#b3402a;--good:#3f6b3e;--bad:#a33;
+  --line:rgba(38,34,28,.15);--mono:"IBM Plex Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:"Noto Serif SC",Georgia,serif;font-weight:400;
+  font-size:17px;line-height:1.9;
+}
+main{max-width:720px;margin:0 auto;padding:4rem 1.6rem 6rem}
+header.lesson{margin-bottom:3.5rem}
+.kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase}
+h1{font-size:2.3rem;font-weight:600;line-height:1.3;margin:.6rem 0 1rem}
+.meta{font-family:var(--mono);font-size:.72rem;color:var(--faint);letter-spacing:.1em}
+h2{font-size:1.45rem;font-weight:600;margin:3.4rem 0 1.2rem;padding-top:2rem;border-top:1px solid var(--line)}
+h2 .no{color:var(--accent);font-family:var(--mono);font-size:.9rem;margin-right:.6rem;vertical-align:.1em}
+p{margin-bottom:1.2rem}
+strong{font-weight:600}
+em{font-style:normal;background:linear-gradient(transparent 65%,rgba(179,64,42,.18) 65%)}
+code{font-family:var(--mono);font-size:.82em;background:rgba(38,34,28,.06);padding:.1em .4em;border-radius:3px}
+pre{background:#26221c;color:#ece5d8;padding:1.2rem 1.4rem;border-radius:6px;overflow-x:auto;font-size:.78rem;line-height:1.8;margin:1.4rem 0;font-family:var(--mono)}
+pre .c{color:#8a8273}pre .v{color:#e8b44a}
+a{color:var(--accent)}
+.note{
+  border-left:3px solid var(--accent);background:rgba(179,64,42,.05);
+  padding:.9rem 1.2rem;font-size:.92rem;margin:1.4rem 0;color:var(--soft);
+}
+.src{font-size:.85rem;color:var(--soft)}
+
+/* ── 互动区通用 ── */
+.demo{border:1px solid var(--line);border-radius:8px;background:#fff;padding:1.4rem;margin:1.6rem 0}
+.demo .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.6rem}
+.demo .ttl{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--faint);text-transform:uppercase}
+button{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;cursor:pointer;
+  border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);
+  padding:.5rem 1.1rem;border-radius:4px;transition:transform .15s cubic-bezier(.2,1.4,.3,1),background .15s;
+}
+button:hover{transform:translateY(-2px)}
+button:active{transform:translateY(0) scale(.96)}
+button.ghost{background:transparent;color:var(--ink)}
+select,input[type=range],input[type=text]{
+  font-family:var(--mono);font-size:.78rem;padding:.35rem .5rem;
+  border:1.5px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);
+}
+/* 赛道 */
+.lane{display:grid;grid-template-columns:170px 1fr;gap:1rem;align-items:center;padding:.55rem 0;border-bottom:1px dashed var(--line)}
+.lane:last-child{border-bottom:none}
+.lane .lbl{font-family:var(--mono);font-size:.66rem;color:var(--soft);line-height:1.5;word-break:break-all}
+.track{position:relative;height:34px;background:rgba(38,34,28,.04);border-radius:17px}
+.dot{
+  position:absolute;left:2px;top:2px;width:30px;height:30px;border-radius:50%;
+  background:var(--accent);
+}
+.run .dot{transition-property:left;transition-duration:var(--d,1s);left:calc(100% - 32px)}
+.l-linear .dot{transition-timing-function:linear}
+.l-ease .dot{transition-timing-function:ease}
+.l-expo .dot{transition-timing-function:cubic-bezier(.16,1,.3,1)}
+.l-back .dot{transition-timing-function:cubic-bezier(.2,1.4,.3,1)}
+@media(max-width:560px){.lane{grid-template-columns:1fr}.lane .lbl{order:2}}
+
+/* quiz */
+.q{border:1px solid var(--line);border-radius:8px;background:#fff;padding:1.3rem 1.4rem;margin:1.2rem 0}
+.q .stem{font-weight:600;margin-bottom:.9rem}
+.q .opts{display:grid;gap:.6rem}
+.q .opt{
+  text-align:left;background:transparent;color:var(--ink);border:1.5px solid var(--line);
+  font-family:"Noto Serif SC",serif;font-size:.92rem;letter-spacing:.02em;padding:.7rem 1rem;
+}
+.q .opt:hover{border-color:var(--ink);transform:none}
+.q .opt.right{border-color:var(--good);background:rgba(63,107,62,.08)}
+.q .opt.wrong{border-color:var(--bad);background:rgba(170,51,51,.07)}
+.q .fb{font-size:.85rem;margin-top:.8rem;display:none}
+.q .fb.show{display:block}
+.q .fb.ok{color:var(--good)}.q .fb.no{color:var(--bad)}
+
+/* 实战任务 */
+.task .stage{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+@media(max-width:560px){.task .stage{grid-template-columns:1fr}}
+.task .cell{border:1px dashed var(--line);border-radius:6px;padding:1rem;text-align:center}
+.task .cell h4{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;color:var(--faint);margin-bottom:.9rem}
+.task .box{
+  width:54px;height:54px;border-radius:8px;margin:0 auto;background:var(--ink);
+  transform:translateY(70px) scale(.6);opacity:0;
+}
+.task.play .box.target{animation:pop 1s cubic-bezier(.16,1,.3,1) forwards}
+.task.play .box.mine{animation:pop 1s var(--myease,linear) forwards}
+@keyframes pop{to{transform:none;opacity:1}}
+.task .ctl{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
+.task input[type=text]{flex:1;min-width:230px}
+#verdict{font-size:.85rem;margin-top:.7rem}
+
+footer.lesson{
+  margin-top:4rem;padding-top:2rem;border-top:1px solid var(--line);
+  font-size:.88rem;color:var(--soft);
+}
+.next{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem}
+.next a{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-decoration:none;
+  border:1.5px solid var(--ink);color:var(--ink);padding:.6rem 1.1rem;border-radius:4px;
+}
+.next a:hover{background:var(--ink);color:var(--paper)}
+</style>
+</head>
+<body>
+<main>
+
+<header class="lesson">
+  <div class="kicker">动效交互 · 第 1 课</div>
+  <h1>缓动:动效的语法</h1>
+  <div class="meta">约 25 分钟 · 路线:原生 CSS/JS · 前置:无</div>
+</header>
+
+<p>你那四个落地页里,真正决定"手感"的不是炫技,而是反复出现的几串数字:<code>cubic-bezier(.16,1,.3,1)</code>、<code>cubic-bezier(.2,1.4,.3,1)</code>、<code>cubic-bezier(.22,1,.36,1)</code>。这一课只做一件事:<em>让你从"抄这些参数"变成"知道为什么是这些参数"。</em></p>
+
+<h2><span class="no">01</span>三条铁律(知识,5 分钟)</h2>
+
+<p><strong>缓动(easing)描述速度如何随时间变化。</strong>现实世界里没有匀速运动的物体——门被推开是先快后慢,皮球落地是先慢后快。动效模拟物理,所以:</p>
+
+<p><strong>律一:入场用 ease-out(先快后慢)。</strong>元素出现时,用户在等它——开头快,响应感强;结尾慢,落点稳。你四个页面里<em>所有</em>入场动画都是 ease-out 族,没有例外。</p>
+
+<p><strong>律二:退场用 ease-in(先慢后快),或者干脆别给退场太多戏。</strong>离开的元素用户不关心,加速离场即可。</p>
+
+<p><strong>律三:linear 只配伺候机械运动。</strong>跑马灯、雷达扫描线、进度条——你的 BIOS 页里那条下移的扫描亮带用的就是 <code>linear</code>,因为它是机器,不是生物。给按钮 hover 用 linear,看起来就像 PPT。</p>
+
+<div class="note">浏览器关键字 <code>ease</code>/<code>ease-out</code> 的曲线都太"温",最大斜率小、个性弱。创意网站几乎全用自定义 bezier——这就是同样 0.3 秒,Awwwards 站和普通站手感不同的最大原因。</div>
+
+<h2><span class="no">02</span>亲眼看差别(互动)</h2>
+
+<p>四条赛道,同样的 1 秒,只有缓动不同。点「跑」,盯着<strong>后半程</strong>看:</p>
+
+<div class="demo" id="race">
+  <div class="bar">
+    <span class="ttl">EASING RACE · 1000ms</span>
+    <span>
+      <button id="runBtn">跑 ▸</button>
+      <button class="ghost" id="resetBtn">重置</button>
+    </span>
+  </div>
+  <div class="lane l-linear"><span class="lbl">linear<br>(机械)</span><div class="track"><div class="dot"></div></div></div>
+  <div class="lane l-ease"><span class="lbl">ease<br>(浏览器默认,温吞)</span><div class="track"><div class="dot"></div></div></div>
+  <div class="lane l-expo"><span class="lbl">cubic-bezier(.16,1,.3,1)<br>(expo-out · 神话之书入场)</span><div class="track"><div class="dot"></div></div></div>
+  <div class="lane l-back"><span class="lbl">cubic-bezier(.2,1.4,.3,1)<br>(back-out 回弹 · 田野笔记贴纸)</span><div class="track"><div class="dot"></div></div></div>
+</div>
+
+<p>注意 <code>expo-out</code>:前 20% 时间走完了约 80% 路程,剩下 80% 时间都在"刹车"——这就是高级感的来源:<em>快得有冲劲,停得有耐心。</em>第二个参数 <code>1.4 &gt; 1</code> 的 back-out 会冲过头再弹回来,适合俏皮的 UI(贴纸、徽章),不适合大面积排版。</p>
+
+<h2><span class="no">03</span>检验直觉(测验)</h2>
+
+<div class="q" data-a="1">
+  <div class="stem">Q1 · 一个模态框(modal)弹出时,应该用哪种缓动?</div>
+  <div class="opts">
+    <button class="opt">ease-in,慢慢进入显得稳重优雅</button>
+    <button class="opt">ease-out,快速响应然后从容落定</button>
+    <button class="opt">linear,保持匀速看起来最为中性</button>
+  </div>
+  <div class="fb"></div>
+</div>
+
+<div class="q" data-a="2">
+  <div class="stem">Q2 · 你的 BIOS 页里那条循环下移的 CRT 扫描亮带,为什么用 linear?</div>
+  <div class="opts">
+    <button class="opt">因为循环动画使用缓动会消耗性能</button>
+    <button class="opt">因为 linear 在暗色页面上更易察觉</button>
+    <button class="opt">因为它是机械运动,匀速才符合直觉</button>
+  </div>
+  <div class="fb"></div>
+</div>
+
+<div class="q" data-a="0">
+  <div class="stem">Q3 · cubic-bezier(.2,1.4,.3,1) 里的 1.4 超过了 1,产生什么效果?</div>
+  <div class="opts">
+    <button class="opt">数值越界产生过冲,元素冲过终点再弹回</button>
+    <button class="opt">数值越界被浏览器忽略,回退为默认值</button>
+    <button class="opt">数值越界拉长时间,动画会变慢约四成</button>
+  </div>
+  <div class="fb"></div>
+</div>
+
+<h2><span class="no">04</span>实战:调出"神话之书"的手感(任务)</h2>
+
+<p>左边是 <code>fable.html</code> 入场动画的真实曲线(目标)。在输入框里写你自己的 <code>cubic-bezier(a,b,c,d)</code>,点「播放」对比,<em>调到肉眼无法区分为止</em>。提示:从 <code>cubic-bezier(.5,.5,.5,.5)</code> 这种平庸值开始,体会每个数字的作用——前两个控制起步,后两个控制刹车。</p>
+
+<div class="demo task" id="task">
+  <div class="stage">
+    <div class="cell"><h4>TARGET · (.16,1,.3,1)</h4><div class="box target"></div></div>
+    <div class="cell"><h4>YOURS</h4><div class="box mine"></div></div>
+  </div>
+  <div class="ctl">
+    <input type="text" id="myease" value="cubic-bezier(.5,.5,.5,.5)" spellcheck="false">
+    <button id="playTask">播放 ▸</button>
+  </div>
+  <div id="verdict"></div>
+</div>
+
+<p class="src">调完之后,把你的最终参数发给我(你的 agent 老师),我来点评你对四个参数的理解。</p>
+
+<h2><span class="no">05</span>延伸与下一步</h2>
+
+<p><strong>本课主推资源:</strong><a href="https://animations.dev/" target="_blank" rel="noopener">Animations on the Web — Emil Kowalski</a>(Linear 设计工程师,课程第一模块 "Making it Feel Right" 就是本课的完整版)。辅助工具:<a href="https://gsap.com/resources/" target="_blank" rel="noopener">GSAP Ease Visualizer</a>,可拖拽曲线实时预览。</p>
+
+<p>速查表已为你生成:<a href="../reference/easing-cheatsheet.html">缓动速查表(reference/easing-cheatsheet.html)</a>——四个落地页的签名曲线都在里面,下次写动效直接查。</p>
+
+<footer class="lesson">
+  <p>有任何不清楚的地方,直接回到终端问你的 agent 老师——比如"为什么 spring 动画没有固定时长?"或者"帮我看看我调的曲线"。完成本课后告诉我,我会写入学习记录并准备第 2 课(时长与速度感知)。</p>
+  <div class="next">
+    <a href="../reference/easing-cheatsheet.html">📋 缓动速查表</a>
+    <a href="https://animations.dev/" target="_blank" rel="noopener">📚 主推资源</a>
+  </div>
+</footer>
+
+</main>
+<script>
+/* 赛道 */
+const race=document.getElementById("race");
+document.getElementById("runBtn").onclick=()=>{
+  race.classList.remove("run");void race.offsetWidth;
+  race.querySelectorAll(".track").forEach(t=>t.style.setProperty("--d","1s"));
+  race.classList.add("run");
+};
+document.getElementById("resetBtn").onclick=()=>race.classList.remove("run");
+
+/* quiz:即时反馈 */
+const WHY=[
+  "对。用户在等它出现:起步快 = 响应快,收尾慢 = 落点稳。",
+  "对。机械系统没有意图,匀速反而最可信——这是 linear 唯一的主场。",
+  "对。控制点 y 值超出 [0,1],插值会越过终点再回落,这就是回弹(overshoot)。"
+];
+document.querySelectorAll(".q").forEach((q,qi)=>{
+  const ans=+q.dataset.a,fb=q.querySelector(".fb");
+  q.querySelectorAll(".opt").forEach((o,i)=>o.onclick=()=>{
+    q.querySelectorAll(".opt").forEach(x=>x.classList.remove("right","wrong"));
+    o.classList.add(i===ans?"right":"wrong");
+    if(i!==ans)q.querySelectorAll(".opt")[ans].classList.add("right");
+    fb.className="fb show "+(i===ans?"ok":"no");
+    fb.textContent=i===ans?WHY[qi]:"再想想——回看第 01 节的三条铁律。";
+  });
+});
+
+/* 实战任务 */
+const task=document.getElementById("task"),inp=document.getElementById("myease"),verdict=document.getElementById("verdict");
+const TARGET=[.16,1,.3,1];
+document.getElementById("playTask").onclick=()=>{
+  const m=inp.value.match(/cubic-bezier\(\s*([\d.+-]+)\s*,\s*([\d.+-]+)\s*,\s*([\d.+-]+)\s*,\s*([\d.+-]+)\s*\)/);
+  if(!m){verdict.textContent="✗ 格式:cubic-bezier(a, b, c, d)";verdict.style.color="var(--bad)";return;}
+  const mine=m.slice(1,5).map(Number);
+  task.style.setProperty("--myease",inp.value);
+  task.classList.remove("play");void task.offsetWidth;task.classList.add("play");
+  const dist=Math.sqrt(mine.reduce((s,v,i)=>s+(v-TARGET[i])**2,0));
+  verdict.style.color=dist<.18?"var(--good)":dist<.6?"var(--soft)":"var(--bad)";
+  verdict.textContent=dist<.18
+    ?`✓ 几乎重合(偏差 ${dist.toFixed(2)})——你已经摸到 expo-out 的形状了。`
+    :dist<.6?`接近了(偏差 ${dist.toFixed(2)})。后半程谁先停?调后两个数。`
+    :`差距还大(偏差 ${dist.toFixed(2)})。先把第二个数拉到 1 附近试试。`;
+};
+</script>
+</body>
+</html>
