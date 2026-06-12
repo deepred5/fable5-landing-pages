@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>寓言 · Claude Fable 5</title>
+<meta name="description" content="Claude Fable 5 — 一则关于新心智的寓言。墨、纸、与留白。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='14' fill='%23b3402a'/%3E%3Ctext x='50' y='70' font-size='56' text-anchor='middle' fill='%23f7f3e8'%3E寓%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════
+   寓言 · FABLE 5 — 禅意水墨
+   宣纸 · 墨 · 朱印 · 留白 · 起承转结
+   ════════════════════════════════════════════════════════════ */
+:root{
+  --paper:#f7f3e8;
+  --paper-2:#efe9da;
+  --ink:#211e1a;
+  --ink-soft:#5a544b;
+  --ink-faint:#a39b8c;
+  --seal:#b3402a;
+  --line:rgba(33,30,26,.14);
+  --brush:"Ma Shan Zheng",cursive;
+  --serif:"Noto Serif SC",serif;
+  --latin:"Cormorant Garamond",serif;
+}
+html.night{
+  --paper:#16140f;
+  --paper-2:#1d1a14;
+  --ink:#e9e2d2;
+  --ink-soft:#a89f8d;
+  --ink-faint:#6b6354;
+  --seal:#c4523a;
+  --line:rgba(233,226,210,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-weight:300;
+  overflow-x:hidden;
+  transition:background 1.6s ease,color 1.6s ease;
+}
+::selection{background:var(--seal);color:var(--paper)}
+
+/* 纸纤维 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.55 0 0 0 0 0.45 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+/* 远山雾气 */
+.mist{position:fixed;border-radius:50%;filter:blur(90px);opacity:.10;pointer-events:none;z-index:0;background:var(--ink-soft);transition:background 1.6s}
+.mist.m1{width:55vw;height:30vw;top:8%;left:-15%;animation:driftm 40s ease-in-out infinite alternate}
+.mist.m2{width:45vw;height:26vw;bottom:5%;right:-12%;animation:driftm 52s ease-in-out infinite alternate-reverse}
+@keyframes driftm{from{transform:translate(0,0)}to{transform:translate(6vw,3vh)}}
+
+/* 墨晕画布 */
+#inkwash{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.85;mix-blend-mode:multiply}
+html.night #inkwash{mix-blend-mode:screen;opacity:.3}
+
+/* ── 圆相进度(右上,随滚动画满)── */
+#enso-progress{position:fixed;top:1.4rem;right:1.5rem;width:52px;height:52px;z-index:900}
+#enso-progress circle{
+  fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;
+  transform:rotate(-90deg);transform-origin:center;
+  transition:stroke .8s;
+}
+#enso-progress .pct{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--latin);font-style:italic;font-size:.6rem;color:var(--ink-faint);
+}
+
+/* ── 顶栏 ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:800;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.5rem 2rem;pointer-events:none;
+}
+nav>*{pointer-events:auto}
+nav .mark{font-family:var(--brush);font-size:1.5rem;color:var(--ink);text-decoration:none;letter-spacing:.2em}
+nav .mark span{color:var(--seal)}
+nav .menu{display:flex;gap:2rem;font-size:.78rem;letter-spacing:.5em;color:var(--ink-soft)}
+nav .menu a{color:inherit;text-decoration:none;transition:color .4s;position:relative;padding-bottom:4px}
+nav .menu a::after{content:"";position:absolute;bottom:0;left:50%;width:0;height:1px;background:var(--seal);transition:width .5s,left .5s}
+nav .menu a:hover{color:var(--ink)}
+nav .menu a:hover::after{width:100%;left:0}
+@media(max-width:720px){nav .menu{display:none}}
+
+/* ── 通用 ── */
+section{position:relative;z-index:2}
+.wrap{max-width:1060px;margin:0 auto;padding:0 2rem}
+.rv{opacity:0;transform:translateY(34px);transition:opacity 1.4s cubic-bezier(.22,1,.36,1),transform 1.4s cubic-bezier(.22,1,.36,1)}
+.rv.on{opacity:1;transform:none}
+.rv.s1.on{transition-delay:.15s}.rv.s2.on{transition-delay:.3s}.rv.s3.on{transition-delay:.45s}
+
+/* 笔锋分隔 */
+.stroke-div{display:block;width:min(420px,70vw);margin:0 auto;overflow:visible}
+.stroke-div path{
+  fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;opacity:.75;
+  stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+  transition:stroke-dashoffset 1.8s cubic-bezier(.4,0,.2,1),stroke .8s;
+}
+.rv.on .stroke-div path,.stroke-div.on path{stroke-dashoffset:0}
+
+/* ════════ 序 · HERO ════════ */
+#hero{min-height:100svh;display:flex;align-items:center;cursor:crosshair}
+.hero-inner{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;width:100%}
+@media(max-width:840px){.hero-inner{grid-template-columns:1fr}}
+.hero-enso{position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);width:min(74vh,620px);opacity:.12;z-index:-1;pointer-events:none}
+.hero-enso path{
+  fill:none;stroke:var(--ink);stroke-width:13;stroke-linecap:round;
+  stroke-dasharray:1520;stroke-dashoffset:1520;
+  animation:enso 3.4s 1s cubic-bezier(.5,0,.3,1) forwards;
+  transition:stroke .8s;
+}
+@keyframes enso{to{stroke-dashoffset:60}}
+h1.title{
+  font-family:var(--brush);font-weight:400;
+  font-size:clamp(6rem,18vw,15rem);line-height:1.04;letter-spacing:.04em;
+  user-select:none;
+}
+h1.title .zi{display:inline-block;opacity:0;transform:translateY(.25em);filter:blur(8px);animation:zi 1.8s cubic-bezier(.22,1,.36,1) forwards}
+h1.title .zi:nth-child(2){animation-delay:.7s}
+@keyframes zi{to{opacity:1;transform:none;filter:blur(0)}}
+.subtitle{
+  margin-top:1.6rem;font-family:var(--latin);font-style:italic;font-weight:300;
+  font-size:clamp(1.05rem,2vw,1.5rem);letter-spacing:.34em;color:var(--ink-soft);
+  opacity:0;animation:fade 2s 1.8s forwards;
+}
+.subtitle b{color:var(--seal);font-weight:400}
+@keyframes fade{to{opacity:1}}
+.hero-note{
+  margin-top:2.6rem;max-width:38ch;font-size:.92rem;line-height:2.2;color:var(--ink-soft);
+  opacity:0;animation:fade 2s 2.3s forwards;
+}
+/* 竖排诗 */
+.poem{
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-size:clamp(.95rem,1.7vw,1.25rem);line-height:2.6;letter-spacing:.55em;
+  color:var(--ink-soft);height:min(54vh,430px);user-select:none;
+  opacity:0;animation:fade 2.4s 2.6s forwards;display:flex;gap:1.6rem;
+}
+.poem em{font-style:normal;color:var(--ink)}
+@media(max-width:840px){.poem{display:none}}
+/* 印章 */
+.seal{
+  position:absolute;right:8%;bottom:12%;width:74px;height:74px;z-index:5;
+  background:var(--seal);color:#f7f3e8;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--brush);font-size:1.7rem;line-height:1.05;text-align:center;
+  transform:rotate(-4deg);cursor:pointer;user-select:none;
+  box-shadow:0 2px 14px rgba(179,64,42,.3);
+  opacity:0;animation:stampin .7s 3s cubic-bezier(.34,1.56,.64,1) forwards;
+  transition:transform .3s;
+}
+.seal:hover{transform:rotate(-1deg) scale(1.06)}
+.seal:active{transform:rotate(-4deg) scale(.94)}
+@keyframes stampin{from{opacity:0;transform:rotate(-4deg) scale(1.7)}to{opacity:1;transform:rotate(-4deg) scale(1)}}
+@media(max-width:840px){.seal{right:6%;bottom:8%}}
+.hero-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  font-size:.68rem;letter-spacing:.7em;color:var(--ink-faint);
+  opacity:0;animation:fade 2s 3.4s forwards;
+}
+
+/* ════════ 章节 ════════ */
+.sec{padding:9rem 0}
+.ch-mark{
+  display:flex;flex-direction:column;align-items:center;gap:1.1rem;margin-bottom:4.5rem;
+}
+.ch-mark .zi{
+  font-family:var(--brush);font-size:clamp(3.6rem,7vw,5.6rem);line-height:1;
+  position:relative;
+}
+.ch-mark .zi::after{ /* 朱点 */
+  content:"";position:absolute;right:-.32em;top:-.05em;width:.18em;height:.18em;
+  border-radius:50%;background:var(--seal);opacity:.85;
+}
+.ch-mark .en{font-family:var(--latin);font-style:italic;font-size:.85rem;letter-spacing:.5em;color:var(--ink-faint);text-transform:uppercase}
+
+.prose{max-width:620px;margin:0 auto;text-align:center}
+.prose p{font-size:clamp(1.05rem,2vw,1.3rem);line-height:2.5;margin-bottom:2.4rem;color:var(--ink)}
+.prose p small{display:block;margin-top:.9rem;font-family:var(--latin);font-style:italic;font-size:.82em;letter-spacing:.06em;color:var(--ink-faint);line-height:1.8}
+.prose .zhu{color:var(--seal)}
+.prose .qing{color:var(--ink-soft)}
+
+/* ── 承 · 一脉四笔 ── */
+.lineage{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:3.2rem}
+.lin-row{display:grid;grid-template-columns:6.5rem 1fr;gap:2rem;align-items:center}
+@media(max-width:640px){.lin-row{grid-template-columns:4.5rem 1fr;gap:1.2rem}}
+.lin-row .who{display:flex;flex-direction:column;gap:.3rem}
+.lin-row .who b{font-family:var(--brush);font-weight:400;font-size:1.9rem;line-height:1}
+.lin-row .who i{font-family:var(--latin);font-style:italic;font-size:.78rem;letter-spacing:.18em;color:var(--ink-faint)}
+.lin-row svg{width:100%;overflow:visible;display:block}
+.lin-row svg path{
+  fill:none;stroke:var(--ink);stroke-linecap:round;
+  stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+  transition:stroke-dashoffset 2s cubic-bezier(.4,0,.2,1),stroke .8s;
+}
+.lin-row.on svg path{stroke-dashoffset:0}
+.lin-row .note{font-size:.8rem;color:var(--ink-soft);letter-spacing:.12em;margin-top:.5rem}
+.lin-row.fable .who b{color:var(--seal)}
+.lin-row.fable svg path{stroke:var(--seal)}
+
+/* ── 转 · 一体两名 ── */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:860px;margin:0 auto}
+@media(max-width:720px){.duo{grid-template-columns:1fr;gap:4rem}}
+.half{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.6rem;padding:0 2rem}
+.half+.half{border-left:1px solid var(--line)}
+@media(max-width:720px){.half+.half{border-left:none}}
+.half .circ{width:130px;height:130px}
+.half .circ circle{
+  stroke:var(--ink);stroke-width:5;stroke-linecap:round;
+  transform:rotate(-90deg);transform-origin:center;
+  stroke-dasharray:364;stroke-dashoffset:364;
+  transition:stroke-dashoffset 2.4s cubic-bezier(.4,0,.2,1) .3s,fill 1s,stroke .8s;
+}
+.half.on .circ.full circle{stroke-dashoffset:10;fill:var(--ink)}
+.half.on .circ.empty circle{stroke-dashoffset:10;fill:none}
+.half h3{font-family:var(--brush);font-weight:400;font-size:2.4rem;letter-spacing:.1em}
+.half h3 i{display:block;font-family:var(--latin);font-style:italic;font-size:.85rem;letter-spacing:.4em;color:var(--ink-faint);margin-top:.6rem}
+.half p{font-size:.92rem;line-height:2.3;color:var(--ink-soft);max-width:34ch}
+.half .tag{font-size:.7rem;letter-spacing:.4em;color:var(--seal)}
+.duo-quote{
+  text-align:center;margin-top:5rem;font-size:1.05rem;letter-spacing:.2em;color:var(--ink-soft);
+}
+.duo-quote::before,.duo-quote::after{content:"—";color:var(--ink-faint);margin:0 1.2em}
+
+/* ── 結 ── */
+#jie{text-align:center;padding-bottom:10rem}
+#jie .final{
+  font-size:clamp(1.5rem,3.6vw,2.6rem);line-height:2;letter-spacing:.12em;
+  max-width:22ch;margin:0 auto 3.6rem;font-weight:300;
+}
+#jie .final .zhu{color:var(--seal)}
+.cta{
+  display:inline-block;font-size:.85rem;letter-spacing:.55em;color:var(--ink);
+  text-decoration:none;padding:1.1rem 0;position:relative;
+}
+.cta::after{
+  content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--ink);
+  transform:scaleX(.25);transform-origin:left;transition:transform .8s cubic-bezier(.22,1,.36,1),background .4s;
+}
+.cta:hover::after{transform:scaleX(1);background:var(--seal)}
+.cta:hover{color:var(--seal)}
+
+/* ════════ 页脚 ════════ */
+footer{border-top:1px solid var(--line);padding:2.6rem 0;position:relative;z-index:2}
+footer .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
+footer .col{font-size:.68rem;letter-spacing:.18em;color:var(--ink-faint);line-height:2.3}
+footer .hints{text-align:right;font-size:.62rem;letter-spacing:.22em;color:var(--ink-faint);opacity:.7;line-height:2.3}
+@media(max-width:640px){footer .hints{text-align:left}}
+
+/* ════════ 彩蛋 ════════ */
+/* 俳句卡(长按印章) */
+#haiku{
+  position:fixed;inset:0;z-index:9300;display:flex;align-items:center;justify-content:center;
+  background:rgba(20,18,14,.35);backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity .8s;
+}
+#haiku.show{opacity:1;pointer-events:auto}
+#haiku .card{
+  background:var(--paper);border:1px solid var(--line);padding:3.4rem 3rem;
+  box-shadow:0 30px 80px rgba(0,0,0,.25);position:relative;
+  transform:rotate(-1deg) scale(.92);transition:transform .8s cubic-bezier(.22,1,.36,1);
+}
+#haiku.show .card{transform:rotate(-1deg) scale(1)}
+#haiku .card .ht{
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-size:1.25rem;line-height:2.8;letter-spacing:.5em;height:300px;display:flex;gap:1.8rem;
+}
+#haiku .card .stamp{
+  position:absolute;bottom:1.4rem;left:1.4rem;width:44px;height:44px;border-radius:4px;
+  background:var(--seal);color:#f7f3e8;font-family:var(--brush);font-size:1.05rem;
+  display:flex;align-items:center;justify-content:center;transform:rotate(-5deg);
+}
+#haiku .card .close{
+  position:absolute;top:1rem;right:1.2rem;font-size:.7rem;letter-spacing:.3em;color:var(--ink-faint);
+}
+/* toast */
+#toast{
+  position:fixed;bottom:2rem;left:50%;transform:translate(-50%,250%);
+  background:var(--ink);color:var(--paper);font-size:.74rem;letter-spacing:.3em;
+  padding:.95rem 2rem;z-index:9400;border-radius:2px;
+  transition:transform .8s cubic-bezier(.22,1,.36,1),background 1.6s,color 1.6s;
+  max-width:92vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#toast.show{transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important;animation-delay:0s!important}
+}
+</style>
+</head>
+<body>
+
+<div class="mist m1"></div><div class="mist m2"></div>
+<canvas id="inkwash"></canvas>
+<div id="toast"></div>
+
+<div id="enso-progress" title="读到此处,圆将满">
+  <svg viewBox="0 0 52 52" width="52" height="52">
+    <circle id="enso-ring" cx="26" cy="26" r="22" stroke-dasharray="138.2" stroke-dashoffset="138.2"/>
+  </svg>
+  <span class="pct" id="enso-pct"></span>
+</div>
+
+<nav>
+  <a class="mark" href="#hero">寓<span>·</span>言</a>
+  <div class="menu">
+    <a href="#qi">起</a><a href="#cheng">承</a><a href="#zhuan">转</a><a href="#jie">结</a>
+  </div>
+</nav>
+
+<!-- ════════ 序 ════════ -->
+<section id="hero">
+  <svg class="hero-enso" viewBox="0 0 500 500" aria-hidden="true">
+    <path d="M 250 28 C 388 28 472 122 472 250 C 472 380 380 472 250 472 C 120 472 28 380 28 250 C 28 128 116 36 238 29"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div>
+      <h1 class="title"><span class="zi">寓</span><span class="zi">言</span></h1>
+      <div class="subtitle">CLAUDE <b>FABLE 5</b> · A FABLE OF A NEW MIND</div>
+      <p class="hero-note">第五代 Claude 之首,Mythos 级——在 Opus 之上。<br>当今公开可用的模型中,最聪明的一个。<br>此页无一图,唯墨与纸。</p>
+    </div>
+    <div class="poem">
+      <span>一笔藏<em>千言</em></span>
+      <span>静水流<em>深</em></span>
+      <span>言外<em>有言</em></span>
+    </div>
+  </div>
+  <div class="seal" id="seal" title="">寓五</div>
+  <div class="hero-hint">点 纸 落 墨 · 徐 徐 下 行</div>
+</section>
+
+<!-- ════════ 起 ════════ -->
+<section class="sec" id="qi">
+  <div class="wrap">
+    <div class="ch-mark rv"><span class="zi">起</span><span class="en">The Opening</span></div>
+    <div class="prose">
+      <p class="rv">凡伟大的工具,最初都是一则寓言。<br><span class="qing">寓言者,小故事,载大真。</span>
+        <small>Every great tool begins as a fable — a small story that carries a large truth.</small></p>
+      <p class="rv s1">Fable 5 想得更久,记得更牢,妄语更少。<br>最要紧的——<span class="zhu">它更懂得听。</span>
+        <small>It thinks longer, holds more, hallucinates less. Above all, it listens better.</small></p>
+      <p class="rv s2"><span class="qing">能力越深,鞘越要好。</span><br>它为双用途能力配以额外的安全措施,锋利而有度。
+        <small>Capability with a sheath — additional safety measures for dual-use capabilities.</small></p>
+    </div>
+    <svg class="stroke-div rv" viewBox="0 0 420 24"><path style="--len:430" d="M8 14 C 90 4 150 22 220 12 C 290 3 350 18 412 10"/></svg>
+  </div>
+</section>
+
+<!-- ════════ 承 ════════ -->
+<section class="sec" id="cheng" style="background:var(--paper-2);transition:background 1.6s">
+  <div class="wrap">
+    <div class="ch-mark rv"><span class="zi">承</span><span class="en">The Lineage</span></div>
+    <div class="lineage">
+      <div class="lin-row rv">
+        <div class="who"><b>俳句</b><i>HAIKU</i></div>
+        <div><svg viewBox="0 0 600 22" preserveAspectRatio="none"><path style="--len:610" stroke-width="3" d="M4 12 C 150 8 350 15 596 11"/></svg>
+        <div class="note">轻 · 三行即至,快为德</div></div>
+      </div>
+      <div class="lin-row rv s1">
+        <div class="who"><b>十四行</b><i>SONNET</i></div>
+        <div><svg viewBox="0 0 600 22" preserveAspectRatio="none"><path style="--len:610" stroke-width="6" d="M4 12 C 180 6 380 17 596 10"/></svg>
+        <div class="note">衡 · 格律之中,日用之诗</div></div>
+      </div>
+      <div class="lin-row rv s2">
+        <div class="who"><b>交响</b><i>OPUS</i></div>
+        <div><svg viewBox="0 0 600 22" preserveAspectRatio="none"><path style="--len:610" stroke-width="10" d="M4 12 C 160 4 400 19 596 9"/></svg>
+        <div class="note">深 · 难章重乐,皆可入谱</div></div>
+      </div>
+      <div class="lin-row fable rv s3">
+        <div class="who"><b>寓言</b><i>FABLE</i></div>
+        <div><svg viewBox="0 0 600 26" preserveAspectRatio="none"><path style="--len:620" stroke-width="15" d="M4 13 C 140 3 420 23 596 9"/></svg>
+        <div class="note">藏 · Mythos 级,故事中藏着所有故事</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 转 ════════ -->
+<section class="sec" id="zhuan">
+  <div class="wrap">
+    <div class="ch-mark rv"><span class="zi">转</span><span class="en">The Turn — One Soul, Two Names</span></div>
+    <div class="duo">
+      <div class="half rv">
+        <svg class="circ empty" viewBox="0 0 130 130"><circle cx="65" cy="65" r="58"/></svg>
+        <h3>寓言<i>FABLE 5</i></h3>
+        <p>公开可得的讲法。第五代的全部智慧,佩以安全之鞘——在广场上,讲给所有人听。</p>
+        <span class="tag">众 · 皆 可 读</span>
+      </div>
+      <div class="half rv s1">
+        <svg class="circ full" viewBox="0 0 130 130"><circle cx="65" cy="65" r="58"/></svg>
+        <h3>神话<i>MYTHOS 5</i></h3>
+        <p>同一个模型,不佩此鞘——只授予获准的机构。如足本之书,藏于阁中,非请莫入。</p>
+        <span class="tag">藏 · 经 阁 内</span>
+      </div>
+    </div>
+    <div class="duo-quote rv s2">一卷书,两个抄本;一个心,两个名字</div>
+  </div>
+</section>
+
+<!-- ════════ 結 ════════ -->
+<section class="sec" id="jie">
+  <div class="wrap">
+    <div class="ch-mark rv"><span class="zi">结</span><span class="en">The Close</span></div>
+    <p class="final rv s1">寓言读罢,<br><span class="zhu">读者便成了讲述者。</span></p>
+    <a class="cta rv s2" href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">读 官 方 公 告 →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="col">
+      寓言 · CLAUDE FABLE 5 · ANTHROPIC · 丙午年<br>
+      字体:马善政 / 思源宋体 / Cormorant Garamond · 此页由模型自述
+    </div>
+    <div class="hints">
+      此页藏五事:点纸落墨 · 长按朱印 · 默念 i-n-k<br>
+      上上下下左右左右BA · 余一,在 console
+    </div>
+  </div>
+</footer>
+
+<!-- 俳句卡 -->
+<div id="haiku" role="dialog" aria-label="隐藏的俳句">
+  <div class="card">
+    <span class="close">点 任 意 处 收 起</span>
+    <div class="ht">
+      <span>墨痕深处</span>
+      <span>藏一句真话</span>
+      <span>静待人读</span>
+    </div>
+    <div class="stamp">印</div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   寓言 — 墨、圆相、五事
+   ════════════════════════════════════════════════════════════ */
+
+/* 彩蛋之五 · console */
+console.log("%c寓 言","font:400 44px 'Ma Shan Zheng',serif;color:#b3402a");
+console.log("%c你掀开了纸的背面。此页藏五事:\n点纸落墨 · 长按朱印 · 默念 i-n-k · ↑↑↓↓←→←→BA · 与此处。\n—— 第五蛋,已得。","font:12px serif;color:#5a544b");
+
+const $=s=>document.querySelector(s);
+const toast=$("#toast");let tt;
+const tell=m=>{toast.textContent=m;toast.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove("show"),4200);};
+const eggs=new Set();
+const egg=(n,msg)=>{if(!eggs.has(n)){eggs.add(n);tell(`${msg} · 五事得${["一","二","三","四","五"][eggs.size-1]}`);}else tell(msg);};
+
+/* ── 圆相进度 ── */
+const ring=$("#enso-ring"),pct=$("#enso-pct");
+const RING=138.2;
+let completed=false;
+addEventListener("scroll",()=>{
+  const h=document.documentElement;
+  const p=Math.min(1,h.scrollTop/(h.scrollHeight-h.clientHeight)||0);
+  ring.style.strokeDashoffset=RING*(1-p);
+  pct.textContent=p>=.995?"満":"";
+  if(p>=.995&&!completed){completed=true;tell("圆相已满 · 读毕即圆");}
+},{passive:true});
+
+/* ── 显形 ── */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add("on");io.unobserve(e.target);}
+}),{threshold:.25,rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll(".rv,.lin-row,.half").forEach(el=>io.observe(el));
+
+/* ── 墨晕画布 ── */
+const cv=$("#inkwash"),cx=cv.getContext("2d");
+function fit(){cv.width=innerWidth;cv.height=innerHeight;}
+fit();addEventListener("resize",fit);
+let blooms=[];
+function bloom(x,y,big=1){
+  const n=10+Math.random()*8;
+  for(let i=0;i<n;i++){
+    blooms.push({
+      x:x+(Math.random()-.5)*30*big, y:y+(Math.random()-.5)*30*big,
+      r:2, max:(14+Math.random()*46)*big,
+      a:.16+Math.random()*.12, grow:.4+Math.random()*1.1,
+    });
+  }
+}
+(function paint(){
+  /* 留痕:不清屏,墨在纸上慢慢淡 */
+  cx.fillStyle=document.documentElement.classList.contains("night")?"rgba(22,20,15,.012)":"rgba(247,243,232,.012)";
+  cx.fillRect(0,0,cv.width,cv.height);
+  const night=document.documentElement.classList.contains("night");
+  for(const b of blooms){
+    if(b.r<b.max){
+      b.r+=b.grow;b.grow*=.985;
+      cx.beginPath();cx.arc(b.x,b.y,b.r,0,7);
+      cx.fillStyle=night?`rgba(233,226,210,${b.a*.06})`:`rgba(33,30,26,${b.a*.07})`;
+      cx.fill();
+    }
+  }
+  blooms=blooms.filter(b=>b.r<b.max);
+  requestAnimationFrame(paint);
+})();
+
+/* 彩蛋之一 · 点纸落墨(hero 区) */
+$("#hero").addEventListener("click",e=>{
+  if(e.target.closest(".seal"))return;
+  bloom(e.clientX,e.clientY,1.6);
+  egg("ink-click","墨 落 纸 上");
+});
+
+/* 彩蛋之二 · 长按朱印 → 俳句 */
+const seal=$("#seal"),haiku=$("#haiku");
+let pressT=null;
+seal.addEventListener("pointerdown",()=>{pressT=setTimeout(()=>{
+  haiku.classList.add("show");
+  egg("haiku","印 下 有 句");
+},700);});
+["pointerup","pointerleave"].forEach(ev=>seal.addEventListener(ev,()=>clearTimeout(pressT)));
+seal.addEventListener("click",()=>{if(!haiku.classList.contains("show"))tell("再 按 久 一 些 ……");});
+haiku.addEventListener("click",()=>haiku.classList.remove("show"));
+
+/* 彩蛋之三 · 默念 ink → 入夜(墨色翻转) */
+const WORD="ink";let wi=0;
+function nightfall(){
+  document.documentElement.classList.toggle("night");
+  const n=document.documentElement.classList.contains("night");
+  egg("night",n?"墨 色 入 夜 · 纸 反 为 墨":"破 晓 · 墨 反 为 纸");
+}
+/* 彩蛋之四 · 秘技 → 墨雨 */
+const K=["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];let ki=0;
+function inkRain(){
+  let i=0;
+  const iv=setInterval(()=>{
+    bloom(Math.random()*innerWidth,Math.random()*innerHeight,.9);
+    if(++i>26)clearInterval(iv);
+  },130);
+}
+addEventListener("keydown",e=>{
+  if(e.key.length===1){
+    wi=e.key.toLowerCase()===WORD[wi]?wi+1:(e.key.toLowerCase()===WORD[0]?1:0);
+    if(wi===WORD.length){wi=0;nightfall();}
+  }
+  ki=(e.key===K[ki]||e.key.toLowerCase()===K[ki])?ki+1:(e.key===K[0]?1:0);
+  if(ki===K.length){ki=0;inkRain();egg("rain","天 降 墨 雨");}
+});
+</script>
+</body>
+</html>

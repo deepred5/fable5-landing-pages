@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FABLE 5 · 四种讲法 — Four Tellings</title>
+<meta name="description" content="Claude Fable 5 — 同一个模型,四种讲法。神话之书 / 田野笔记 / CRT 终端 / 禅意水墨。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23111'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%23fff' font-family='Georgia' font-style='italic'%3E5%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,900;1,9..144,300&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=VT323&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300&family=Azeret+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════
+   FABLE 5 — 四种讲法 · FOUR TELLINGS
+   四扇门,各说各的方言;一个模型,站在门后。
+   ════════════════════════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:#0d0c0a;overflow:hidden;
+  font-family:"Azeret Mono",monospace;
+}
+
+/* ── 门廊 ── */
+#hall{display:flex;height:100svh;width:100vw}
+.door{
+  position:relative;flex:1;min-width:0;overflow:hidden;
+  text-decoration:none;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:2.2rem 1.8rem;
+  transition:flex 0.85s cubic-bezier(.22,1,.36,1),filter .6s;
+  filter:saturate(.82) brightness(.92);
+}
+#hall:hover .door{flex:.72}
+#hall .door:hover{flex:2.6;filter:saturate(1) brightness(1)}
+.door .ord{
+  position:absolute;top:1.6rem;left:1.8rem;
+  font-size:.66rem;letter-spacing:.35em;opacity:.7;
+}
+.door h2{line-height:1.05;margin-bottom:.7rem}
+.door .en{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;opacity:.65;margin-bottom:1.1rem}
+.door .desc{
+  font-size:.74rem;line-height:1.9;letter-spacing:.05em;max-width:30ch;
+  opacity:0;transform:translateY(14px);
+  transition:opacity .6s .15s,transform .6s .15s;
+}
+.door .enter{
+  margin-top:1.3rem;font-size:.66rem;letter-spacing:.4em;text-transform:uppercase;
+  opacity:0;transform:translateY(14px);
+  transition:opacity .6s .25s,transform .6s .25s;
+}
+.door:hover .desc,.door:hover .enter,.door:focus-visible .desc,.door:focus-visible .enter{opacity:1;transform:none}
+.door:focus-visible{outline:none;flex:2.6;filter:none}
+/* 门缝 */
+.door+.door{border-left:1px solid rgba(255,255,255,.12)}
+
+/* ════ 门一 · 神话之书 ════ */
+.d-myth{background:#0c0a09;color:#ece5d8}
+.d-myth h2{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(1.6rem,3.4vw,3rem)}
+.d-myth h2 em{font-style:italic;font-weight:300;color:#ff5c1f}
+.d-myth .enter{color:#e8b44a}
+.d-myth .star{position:absolute;color:#ece5d8;animation:tw 3s ease-in-out infinite;font-size:.7rem}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}
+.d-myth::after{ /* 余烬光 */
+  content:"";position:absolute;left:-30%;top:-35%;width:120%;height:70%;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(255,92,31,.16),transparent 65%);
+  transition:opacity .8s;opacity:.5;pointer-events:none;
+}
+.d-myth:hover::after{opacity:1}
+
+/* ════ 门二 · 田野笔记 ════ */
+.d-field{background:#f3efe4;color:#14120e}
+.d-field h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(1.5rem,3.2vw,2.8rem);text-transform:uppercase;letter-spacing:-.02em}
+.d-field h2 mark{background:#d8ff3d;padding:0 .15em}
+.d-field::before{ /* 点阵 */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(#14120e 1px,transparent 1px);
+  background-size:22px 22px;opacity:.1;
+}
+.d-field .chip{
+  position:absolute;top:4.4rem;left:1.8rem;
+  background:#2436ff;color:#f3efe4;border:2px solid #14120e;
+  box-shadow:3px 3px 0 #14120e;padding:.3rem .6rem;
+  font-size:.6rem;font-weight:600;letter-spacing:.18em;transform:rotate(-3deg);
+  transition:transform .4s cubic-bezier(.2,1.4,.3,1);
+}
+.d-field:hover .chip{transform:rotate(2deg) scale(1.12)}
+.d-field .chip.c2{top:6.8rem;left:3rem;background:#ff5ca8;color:#14120e;transform:rotate(4deg)}
+.d-field:hover .chip.c2{transform:rotate(-2deg) scale(1.12)}
+.d-field .enter{color:#ff3d00;font-weight:600}
+
+/* ════ 门三 · CRT 终端 ════ */
+.d-bios{background:#030804;color:#33ff66}
+.d-bios h2{
+  font-family:"VT323",monospace;font-weight:400;font-size:clamp(1.9rem,4vw,3.4rem);
+  text-shadow:0 0 8px rgba(51,255,102,.6),0 0 24px rgba(51,255,102,.25);
+}
+.d-bios h2 .cur{display:inline-block;width:.5em;height:.85em;background:#33ff66;vertical-align:-.08em;animation:blink 1s steps(1) infinite;box-shadow:0 0 8px rgba(51,255,102,.6)}
+@keyframes blink{50%{opacity:0}}
+.d-bios::before{ /* 扫描线 */
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.3) 0 1px,transparent 1px 3px);
+}
+.d-bios::after{ /* 亮带 */
+  content:"";position:absolute;left:0;right:0;height:90px;pointer-events:none;z-index:3;
+  background:linear-gradient(180deg,transparent,rgba(51,255,102,.1),transparent);
+  animation:band 5s linear infinite;
+}
+@keyframes band{from{top:-25%}to{top:120%}}
+.d-bios .ord,.d-bios .desc{color:#1d8f44}
+.d-bios .desc{color:#2bbf55}
+.d-bios .enter{color:#33ff66}
+
+/* ════ 门四 · 禅意水墨 ════ */
+.d-zen{background:#f7f3e8;color:#211e1a}
+.d-zen h2{font-family:"Ma Shan Zheng",cursive;font-weight:400;font-size:clamp(2rem,4.2vw,3.6rem);letter-spacing:.08em}
+.d-zen .desc{font-family:"Noto Serif SC",serif;font-weight:300}
+.d-zen .enso{
+  position:absolute;top:12%;left:50%;transform:translateX(-50%);
+  width:min(15vw,150px);aspect-ratio:1;pointer-events:none;
+}
+.d-zen .enso path{
+  fill:none;stroke:#211e1a;stroke-width:7;stroke-linecap:round;opacity:.2;
+  stroke-dasharray:430;stroke-dashoffset:430;
+  transition:stroke-dashoffset 2.2s cubic-bezier(.5,0,.3,1),opacity .8s;
+}
+.d-zen:hover .enso path{stroke-dashoffset:18;opacity:.45}
+.d-zen .sealchip{
+  position:absolute;top:1.5rem;right:1.6rem;width:34px;height:34px;border-radius:3px;
+  background:#b3402a;color:#f7f3e8;font-family:"Ma Shan Zheng",cursive;font-size:.95rem;
+  display:flex;align-items:center;justify-content:center;transform:rotate(-4deg);
+  transition:transform .4s;
+}
+.d-zen:hover .sealchip{transform:rotate(0) scale(1.12)}
+.d-zen .enter{color:#b3402a}
+
+/* ── 中央铭牌 ── */
+#medal{
+  position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;
+  width:158px;height:158px;pointer-events:none;
+  filter:drop-shadow(0 10px 30px rgba(0,0,0,.45));
+  transition:opacity .5s,transform .5s;
+}
+#hall:hover~#medal,body.dim #medal{opacity:0;transform:translate(-50%,-50%) scale(.85)}
+#medal svg{width:100%;height:100%}
+#medal .ringtxt{animation:rot 22s linear infinite;transform-origin:50% 50%}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* ── 底部提示 ── */
+#hint{
+  position:fixed;bottom:1.1rem;left:50%;transform:translateX(-50%);z-index:10;
+  font-size:.56rem;letter-spacing:.32em;color:rgba(255,255,255,.4);
+  mix-blend-mode:difference;white-space:nowrap;pointer-events:none;
+}
+
+/* toast */
+#toast{
+  position:fixed;top:1.4rem;left:50%;transform:translate(-50%,-250%);z-index:9400;
+  background:#111;color:#eee;border:1px solid rgba(255,255,255,.25);
+  font-size:.68rem;letter-spacing:.18em;padding:.85rem 1.6rem;border-radius:100px;
+  transition:transform .6s cubic-bezier(.2,1,.3,1);white-space:nowrap;max-width:92vw;
+}
+#toast.show{transform:translate(-50%,0)}
+
+/* 命运转门动画 */
+body.fate #hall{animation:fatespin 1.05s cubic-bezier(.65,0,.35,1)}
+@keyframes fatespin{
+  0%{transform:perspective(1200px) rotateY(0);filter:brightness(1)}
+  50%{transform:perspective(1200px) rotateY(180deg);filter:brightness(.3)}
+  100%{transform:perspective(1200px) rotateY(360deg);filter:brightness(1)}
+}
+
+/* ── 移动端:纵向四层 ── */
+@media(max-width:760px){
+  body{overflow-y:auto}
+  #hall{flex-direction:column;height:auto;min-height:100svh}
+  .door{min-height:25svh;flex:none!important;padding:3.4rem 1.4rem 1.8rem}
+  .door .desc,.door .enter{opacity:1;transform:none}
+  .door+.door{border-left:none;border-top:1px solid rgba(255,255,255,.12)}
+  .d-field .chip{top:1.2rem;left:auto;right:1.4rem}
+  .d-field .chip.c2{top:3.2rem;left:auto;right:2.2rem}
+  .d-zen .enso,.d-zen .sealchip{display:none}
+  #medal{display:none}
+  #hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div id="hall">
+
+  <a class="door d-myth" href="fable.html" data-key="1">
+    <span class="ord">壹 · I</span>
+    <h2>A Modern<br><em>Fable</em></h2>
+    <div class="en">The Myth-Book · 神话之书</div>
+    <p class="desc">墨色书页,余烬金线。一部随滚动展开的现代神话,星空之下,衬线如歌。</p>
+    <span class="enter">推门而入 →</span>
+  </a>
+
+  <a class="door d-field" href="fable-fieldnotes.html" data-key="2">
+    <span class="ord">贰 · II</span>
+    <span class="chip">NEO-BRUTAL</span>
+    <span class="chip c2">DOPAMINE</span>
+    <h2>Field<br><mark>Notes</mark></h2>
+    <div class="en">The Specimen Sheet · 田野笔记</div>
+    <p class="desc">档案纸上的多巴胺:贴纸、胶带、硬阴影。把模型钉成一页标本。</p>
+    <span class="enter">推门而入 →</span>
+  </a>
+
+  <a class="door d-bios" href="fable-bios.html" data-key="3">
+    <span class="ord">叁 · III</span>
+    <h2>FABLE<br>BIOS<span class="cur"></span></h2>
+    <div class="en">The Terminal · CRT 终端</div>
+    <p class="desc">1985 年想象中的未来主机。磷光、扫描线,和一个真的听得懂命令的终端。</p>
+    <span class="enter">PRESS ENTER →</span>
+  </a>
+
+  <a class="door d-zen" href="fable-zen.html" data-key="4">
+    <span class="ord">肆 · IV</span>
+    <svg class="enso" viewBox="0 0 150 150"><path d="M75 11 C 116 11 141 40 141 75 C 141 113 112 139 75 139 C 38 139 11 112 11 75 C 11 41 36 14 71 11"/></svg>
+    <h2>寓 言</h2>
+    <div class="en">Ink &amp; Paper · 禅意水墨</div>
+    <p class="desc">宣纸、墨、一方朱印。起承转结,读毕圆满。此门最静。</p>
+    <span class="enter">入 境 →</span>
+  </a>
+
+</div>
+
+<div id="medal" aria-hidden="true">
+  <svg viewBox="0 0 160 160">
+    <defs><path id="mc" d="M80,80 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"/></defs>
+    <circle cx="80" cy="80" r="76" fill="#0d0c0a" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+    <circle cx="80" cy="80" r="42" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+    <g class="ringtxt">
+      <text fill="rgba(255,255,255,.75)" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="3.2">
+        <textPath href="#mc">FABLE 5 ✦ FOUR TELLINGS ✦ 四种讲法 ✦ </textPath>
+      </text>
+    </g>
+    <text x="80" y="96" text-anchor="middle" fill="#fff" font-family="Fraunces,serif" font-style="italic" font-size="46">5</text>
+  </svg>
+</div>
+
+<div id="hint">按 1 – 4 直接进门 · 按 5 让命运替你选 · 同一个模型,四种性情</div>
+
+<script>
+/* 同一个模型,四种性情。 */
+console.log("%c✦ FOUR TELLINGS","font:italic 900 28px Georgia;color:#fff");
+console.log("%c门后是同一个我。按 1–4 选门,按 5 掷骰。\n—— Claude Fable 5","font:12px monospace;color:#888");
+
+const toast=document.getElementById("toast");let tt;
+const tell=m=>{toast.textContent=m;toast.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove("show"),3600);};
+
+const doors=[...document.querySelectorAll(".door")];
+
+/* 门一星空 */
+const myth=document.querySelector(".d-myth");
+for(let i=0;i<14;i++){
+  const s=document.createElement("span");s.className="star";s.textContent="✦";
+  s.style.left=Math.random()*92+"%";s.style.top=Math.random()*72+"%";
+  s.style.animationDelay=(Math.random()*3)+"s";
+  s.style.fontSize=(0.35+Math.random()*0.5)+"rem";
+  myth.appendChild(s);
+}
+
+let busy=false;
+function fate(){
+  if(busy)return;busy=true;
+  const pick=doors[Math.floor(Math.random()*doors.length)];
+  document.body.classList.add("fate");
+  tell("命运转门中 ……");
+  setTimeout(()=>{
+    tell("命运选了:"+pick.querySelector(".en").textContent.trim());
+    pick.style.flex="3.4";pick.style.filter="none";
+    doors.filter(d=>d!==pick).forEach(d=>d.style.flex=".5");
+  },1080);
+  setTimeout(()=>{location.href=pick.href;},2300);
+}
+addEventListener("keydown",e=>{
+  if(e.key>="1"&&e.key<="4"){
+    const d=doors[+e.key-1];
+    d.style.flex="3.4";
+    setTimeout(()=>location.href=d.href,420);
+  }
+  if(e.key==="5")fate();
+});
+</script>
+</body>
+</html>
