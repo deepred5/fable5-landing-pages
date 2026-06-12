@@ -31,6 +31,38 @@ python3 -m http.server 8743
 每一版都藏了五个彩蛋,提示写在各页页脚的小字里。
 找不到的话——每一版的 dev console 里都有一条会全部招供的留言。
 
+## 提示词
+
+全部页面由 Claude Fable 5(Claude Code)根据以下对话提示词生成,每轮一版:
+
+**第一版 · 神话之书**(`fable.html`)
+
+> Generate a landing about yourself, Claude Fable 5. You're totally free, but make sure it's visually appealing, clean, interactive, with motion, easter egg's, and scrolling effect. Search and use 2026 design trends
+
+**第二版 · 田野笔记**(`fable-fieldnotes.html`)
+
+> Generate a landing about yourself, Claude Fable 5. You're totally free, but make sure it's visually appealing, clean, interactive, with motion, easter egg's, and scrolling effect. Search and use 2026 design trends
+>
+> 这次不需要使用 frontend-design skill
+
+**第三版 · CRT 终端**(`fable-bios.html`)
+
+> 还有什么风格可以尝试
+>
+> (模型给出七个备选方向并推荐复古终端与禅意水墨)
+>
+> 同意,开始吧
+
+**第四版 · 禅意水墨**(`fable-zen.html`)
+
+> 再做一个禅意水墨版
+
+**入口页 · 四扇门**(`index.html`)
+
+> 需要的话我可以做一个极简的入口页把四版串起来,开搞
+
+每一版的具体设计方向(配色、字体、动效、彩蛋设计)均由模型自行决定。
+
 ## 致谢
 
 设计参考 2026 年 Web 设计趋势:kinetic typography、scrollytelling、
